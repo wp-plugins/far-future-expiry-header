@@ -4,7 +4,7 @@ Plugin Name: Far Future Expiration Plugin
 Plugin URI: http://www.tipsandtricks-hq.com/wordpress-far-future-expiration-plugin-5980
 Description: This plugin will add a "far future expiration" date for various file types to improve site performance.
 Author: Tips and Tricks HQ
-Version: 1.2
+Version: 1.3
 Author URI: http://www.tipsandtricks-hq.com/
 License: GPLv2 or later
 */
@@ -44,7 +44,7 @@ if(!class_exists('farFutureExpiration'))
 		function ffe_execute_plugins_loaded_operations()
 		{	
 			add_action( 'init', array( &$this, 'load_settings' ) );
-			add_action( 'init', array( &$this, 'ffe_load_libraries' ) );
+			add_action( 'init', array( &$this, 'do_init_time_tasks' ) );
 			add_action( 'admin_init', array( &$this, 'register_ffe_settings_page' ) );
 			add_action( 'admin_menu', array( &$this, 'add_admin_menus' ) );
 		}
@@ -65,8 +65,14 @@ if(!class_exists('farFutureExpiration'))
 			
 		}
 	
-		function ffe_load_libraries()
+		function do_init_time_tasks()
 		{
+                    if(!is_admin()){//Front end init time tasks
+                        $ffe_settings = get_option('far_future_expiration_settings');
+                        if($ffe_settings['enable_gzip']){//Gzip compression is enabled
+                            ob_start('ob_gzhandler');
+                        }
+                    }
 		}
 		
 		
@@ -326,4 +332,3 @@ if(!class_exists('farFutureExpiration'))
 	} //end class
 }
 $GLOBALS['ffe_plugin'] = new farFutureExpiration();
-?>

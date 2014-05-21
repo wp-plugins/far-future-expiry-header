@@ -13,6 +13,7 @@ function displayFarFutureExpirationSettings()
 	$enable_css = '';
 	$enable_swf = '';
 	$num_expiry_days = '';
+        $enable_gzip = '';
 	
 	global $wpdb, $ffe_plugin;
 	if (isset($_POST['ffe_save_settings']))
@@ -43,7 +44,8 @@ function displayFarFutureExpirationSettings()
 				'enable_ico' => isset($_POST["ffe-ico"])?1:0,
 				'enable_js' => isset($_POST["ffe-js"])?1:0,
 				'enable_css' => isset($_POST["ffe-css"])?1:0,
-				'enable_swf' => isset($_POST["ffe-swf"])?1:0
+				'enable_swf' => isset($_POST["ffe-swf"])?1:0,
+                                'enable_gzip' => isset($_POST["enable-gzip"])?1:0
 			);
 			update_option('far_future_expiration_settings', $options); //store the results in WP options table
 			echo '<div id="message" class="updated fade">';
@@ -74,6 +76,7 @@ function displayFarFutureExpirationSettings()
 		$enable_js = $far_future_expiration_settings['enable_js'];
 		$enable_css = $far_future_expiration_settings['enable_css'];
 		$enable_swf = $far_future_expiration_settings['enable_swf'];
+                $enable_gzip = $far_future_expiration_settings['enable_gzip'];
 	}
 ?>
 <div id="poststuff"><div id="post-body">
@@ -99,10 +102,12 @@ that haven't changed (this reduces the number of HTTP requests) and hence the pe
 <p><strong>NOTE: When you use this plugin, the file selected file types are cached in the browser until they expire. Therefore you should not use this on files that change frequently.</strong></p>
 
 </div></div>
+        
+<form action="" method="POST">
+            
 <div class="postbox">
 <h3><label for="title">Far Future Expiration Settings</label></h3>
 <div class="inside">
-<form action="" method="POST">
 	<table class="form-table">
 	<tr valign="top">
 		<th scope="row"><label for="Enableffa"> Enable Far Future Expiration : </label></th>
@@ -114,7 +119,7 @@ that haven't changed (this reduces the number of HTTP requests) and hence the pe
 		<th scope="row"><label for="NumDays"> Number of Days:</label>
 		</th>
 		<td>
-		<input size="10" name="num-expiry-days" value="<?php echo $num_expiry_days; ?>" /> <span>(Days)</span>
+		<input type="text" size="10" name="num-expiry-days" value="<?php echo $num_expiry_days; ?>" /> <span>(Days)</span>
 		<span class="description"> This value sets the expiry date of the selected file types to x days into the future.</span>
 		</td>
 	</tr>
@@ -134,12 +139,25 @@ that haven't changed (this reduces the number of HTTP requests) and hence the pe
 </table>
 <div style="border-bottom: 1px solid #dedede; height: 10px"></div>
 <br />
-<input type="submit" name="ffe_save_settings" value="Save" class="button-primary" />
-</form>
 
 </div></div>
 
+<div class="postbox">
+<h3><label for="title">Gzip Compression Settings</label></h3>
+<div class="inside">
+	<table class="form-table">
+	<tr valign="top">
+		<th scope="row"><label for="Enable-gzip"> Enable Gzip Compression : </label></th>
+		<td>
+		<input type="checkbox" name="enable-gzip" <?php if($enable_gzip) echo ' checked="checked"'; ?> />
+		</td>
+	</tr>
+        </table>
 </div></div>
+    
+<p><input type="submit" name="ffe_save_settings" value="Save" class="button-primary" /></p>
+</form>      
+        
+</div></div><!-- end of poststuff -->
 <?php 
 }
-?>
