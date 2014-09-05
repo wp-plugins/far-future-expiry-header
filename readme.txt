@@ -3,7 +3,7 @@ Contributors: Tips and Tricks HQ
 Donate link: http://www.tipsandtricks-hq.com/wordpress-far-future-expiration-plugin-5980
 Tags: cache, expiry, expiry header, far future expiration, expires header, wp-cache, minify, gzip, javascript, css, compression, speed,
 Requires at least: 3.5
-Tested up to: 3.9
+Tested up to: 4.0
 Stable tag: 1.3
 License: GPLv2 or later
 
